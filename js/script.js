@@ -15,7 +15,7 @@ async function addNewCity() {
 
     console.log(nameCity);
 
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${nameCity}&appid=${myKey}&units=metric&lang=ru`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${nameCity}&appid=${myKey}&units=metric&lang=ru`;
 
     let response = await fetch(url);
     let commits = await response.json();
