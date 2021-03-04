@@ -41,12 +41,10 @@ header .center {
 /* ---------------------------------- */
 main {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
 }
 
 .top {
     display: grid;
-    grid-column: 1/5;
     grid-template-columns: 1fr 1fr;
     grid-gap: 8%;
 }
@@ -109,7 +107,6 @@ main {
 
 .add_favorite {
     display: grid;
-    grid-column: 1/5;
     grid-template-columns: 1fr 1fr;
 }
 
@@ -152,7 +149,6 @@ main {
 
 .favorites {
     display: grid;
-    grid-column: 1/5;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 8%;
     grid-row-gap: 10px;
