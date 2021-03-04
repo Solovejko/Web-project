@@ -8,7 +8,7 @@ body {
     width: 60%;
 }
 
-dl {
+ul {
     margin: 0;
     padding: 0;
 }
@@ -24,10 +24,12 @@ header {
 
 header .left {
     justify-self: start;
+    align-self: center;
 }
 
 header .center {
     justify-self: center;
+    align-self: center;
 }
 
 .update {
@@ -72,7 +74,7 @@ main {
     font-size: 20px;
 }
 
-.weather dt {
+.weather li {
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: #A7AFB1;
@@ -81,16 +83,19 @@ main {
     border-radius: 4px;
 }
 
-.top .weather dt{
+.top .weather li{
     padding: 10px;
 }
 
-.weather b {
+.weather .bold {
     justify-self: start;
+    font-weight: bold;
+    align-self: center;
 }
 
-.weather span {
+.weather .normal {
     justify-self: end;
+    align-self: center;
 }
 
 .top > div{
@@ -116,6 +121,7 @@ main {
 
 .add_favorite .second {
     justify-self: end;
+    align-self: center;
 }
 
 .add_favorite h2{
@@ -123,16 +129,12 @@ main {
     font-weight: normal;
 }
 
-.add_favorite .second {
-    align-self: center;
-}
-
 #submit_city {
     margin: 5px;
     background-image: url("../images/plus.png");
-    height: 40px;
-    width: 40px;
-    background-size: 100%;
+    height: 35px;
+    width: 35px;
+    background-size: 90%;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: transparent;
@@ -183,17 +185,16 @@ main {
 .delete {
     margin: 5px;
     background-image: url("../images/cross.png");
-    height: 100%;
-    width: 70%;
-
-    background-size: 100%;
+    height: 35px;
+    width: 35px;
+    background-size: 90%;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: transparent;
     border: none;
 }
 
-.favorite dl {
+.favorite ul{
     grid-column: 1/5;
 }
 
@@ -218,6 +219,14 @@ main {
         margin-left: 10%;
         margin-right: 10%;
         width: 80%;
+    }
+
+    header .left{
+        grid-column: 1/3;
+    }
+
+    header .center {
+        grid-column: 3/4;
     }
 
     .top .weather {
@@ -245,8 +254,8 @@ main {
 
     .update {
         background-image: url("../images/update.png");
-        height: 100%;
-        width: 100%;
+        height: 50px;
+        width: 50px;
 
         background-size: 60%;
         background-repeat: no-repeat;
@@ -274,6 +283,12 @@ main {
 
     .add_favorite .second {
         justify-self: start;
+        width: 100%;
+    }
+
+    .add_favorite .add_form {
+        display: grid;
+        grid-template-columns: 1fr 50px;
     }
 
     .favorites {
@@ -289,5 +304,15 @@ main {
 
     .favorite .weather {
         font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 365px) {
+    .top .temperature {
+        font-size: 80px;
+    }
+
+    .top .weather {
+        font-size: 16px;
     }
 }
