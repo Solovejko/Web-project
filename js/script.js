@@ -4,23 +4,59 @@ function getId() {
     return globalId++;
 }
 
-async function f() {
+async function addNewCity() {
     let myKey = '0b5edc7455a336d544760ce639198bc9';
-    let idCity = 524894;
-    let url = `http://api.openweathermap.org/data/2.5/weather?id=${idCity}&appid=${myKey}&units=metric`;
+    let input_city = document.getElementById('add_city');
+    let nameCity = input_city.value;
+    input_city.value = '';
 
-    try{
-        let response = await fetch(url);
-        let commits = await response.json();
+    if (nameCity === "")
+        return;
 
-        console.log(commits);
+    console.log(nameCity);
 
-    } catch(err) {
-        alert(err);
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=${nameCity}&appid=${myKey}&units=metric&lang=ru`;
+
+    let response = await fetch(url);
+    let commits = await response.json();
+    console.log(commits);
+
+    if (commits.cod === "401"){
+        alert('Извиние, то у вас проблемы с ключом');
+        return;
     }
-};
 
-function addNewCity(city='Moscow', temperature=5, img='weather.png',
+    if (commits.cod === "404"){
+        alert('Нет информации об этом городе');
+        return;
+    }
+
+    if (commits.cod === "429"){
+        alert('Запросы в минуту превышают лимит бесплатного аккаунта');
+        return;
+    }
+
+    console.log(~~commits.main.temp);
+    console.log(commits.wind.speed);
+    console.log(commits.weather[0].description);
+    console.log(commits.main.pressure);
+    console.log(commits.main.humidity);
+    console.log(commits.coord.lon.toFixed(1), ' ', commits.coord.lat.toFixed(1));
+
+    let temp = ~~commits.main.temp;
+    let img = 'weather.png';
+    let wind = commits.wind.speed;
+    let cloud = commits.weather[0].description;
+    let press = commits.main.pressure;
+    let hum = commits.main.humidity;
+    let x = commits.coord.lon.toFixed(1);
+    let y = commits.coord.lat.toFixed(1);
+
+    createNewElement(nameCity, temp, img, wind, cloud, press, hum, x, y);
+}
+
+
+function createNewElement(city='Moscow', temperature=5, img='weather.png',
                     wind=6.0, cloud='Сloudy', pressure=1013,
                     humidity=52, x=59.88, y=30.42) {
     let list = document.querySelector('.favorites');
