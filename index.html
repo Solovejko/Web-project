@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
         <link rel="shortcut icon" href="images/icon.png" type="imageы/icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/script.js"></script>
     </head>
     <body>
         <header>
@@ -41,13 +42,13 @@
                 <div class="second">
                     <form class="add_form" action="" method="post">
                         <input type="text" name="city" id="add_city" placeholder="Добавить новый город">
-                        <button type="submit" id="submit_city">+</button>
+                        <button type="button" id="submit_city" onclick="addNewCity()">+</button>
                     </form>
                 </div>
             </div>
 
-            <dl class="favorites">
-                <dt class="favorite">
+            <ul class="favorites">
+                <li class="favorite">
                     <h3>Москва</h3>
                     <span class="temperature">5°C</span>
                     <img src="images/weather.png" />
@@ -59,8 +60,8 @@
                         <li><span class="bold">Влажность</span><span class="normal">52%</span></li>
                         <li><span class="bold">Координаты</span><span class="normal">[59.88, 30.42]</span></li>
                     </ul>
-                </dt>
-                <dt class="favorite">
+                </li>
+                <li class="favorite">
                     <h3>Хельсинки</h3>
                     <span class="temperature">3°C</span>
                     <img src="images/weather.png"/>
@@ -72,8 +73,8 @@
                         <li><span class="bold">Влажность</span><span class="normal">52%</span></li>
                         <li><span class="bold">Координаты</span><span class="normal">[59.88, 30.42]</span></li>
                     </ul>
-                </dt>
-                <dt class="favorite">
+                </li>
+                <li class="favorite">
                     <h3>Москва</h3>
                     <span class="temperature">5°C</span>
                     <img src="images/weather.png"/>
@@ -85,8 +86,8 @@
                         <li><span class="bold">Влажность</span><span class="normal">52%</span></li>
                         <li><span class="bold">Координаты</span><span class="normal">[59.88, 30.42]</span></li>
                     </ul>
-                </dt>
-                <dt class="favorite">
+                </li>
+                <li class="favorite">
                     <h3>Хельсинки</h3>
                     <span class="temperature">3°C</span>
                     <img src="images/weather.png"/>
@@ -98,8 +99,8 @@
                         <li><span class="bold">Влажность</span><span class="normal">52%</span></li>
                         <li><span class="bold">Координаты</span><span class="normal">[59.88, 30.42]</span></li>
                     </ul>
-                </dt>
-                <dt class="favorite">
+                </li>
+                <li class="favorite">
                     <h3>Москва</h3>
                     <span class="temperature">5°C</span>
                     <img src="images/weather.png"/>
@@ -111,8 +112,8 @@
                         <li><span class="bold">Влажность</span><span class="normal">52%</span></li>
                         <li><span class="bold">Координаты</span><span class="normal">[59.88, 30.42]</span></li>
                     </ul>
-                </dt>
-                <dt class="favorite">
+                </li>
+                <li class="favorite">
                     <h3>Хельсинки</h3>
                     <span class="temperature">3°C</span>
                     <img src="images/weather.png"/>
@@ -124,8 +125,8 @@
                         <li><span class="bold">Влажность</span><span class="normal">52%</span></li>
                         <li><span class="bold">Координаты</span><span class="normal">[59.88, 30.42]</span></li>
                     </ul>
-                </dt>
-            </dl>
+                </li>
+            </ul>
 
         </main>
         <footer>
