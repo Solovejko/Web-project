@@ -1,5 +1,30 @@
 if (localStorage.getItem('globalId') == null)
+{
     localStorage.setItem('globalId', '0');
+    let l = 0;
+
+    localStorage.setItem('id' + l, 'Москва');
+    localStorage.setItem('globalId', (l + 1).toString());
+    l++;
+
+    localStorage.setItem('id' + l, 'Лондон');
+    localStorage.setItem('globalId', (l + 1).toString());
+    l++;
+
+    localStorage.setItem('id' + l, 'Санкт-Петербург');
+    localStorage.setItem('globalId', (l + 1).toString());
+    l++;
+
+    localStorage.setItem('id' + l, 'Россия');
+    localStorage.setItem('globalId', (l + 1).toString());
+    l++;
+
+    localStorage.setItem('id' + l, 'Киргистан');
+    localStorage.setItem('globalId', (l + 1).toString());
+    l++;
+}
+
+console.log(localStorage.getItem('globalId'));
 
 loadFavoriteCity();
 
@@ -13,13 +38,14 @@ function loadFavoriteCity() {
 }
 
 async function addNewCity(nameCity = undefined, load=false, id='id-1') {
+
     if (nameCity === null)
         return;
 
     let myKey = '0b5edc7455a336d544760ce639198bc9';
     let input_city = document.getElementById('add_city');
 
-    if (!load){
+    if (nameCity === undefined){
         nameCity = input_city.value;
         input_city.value = '';
     }
