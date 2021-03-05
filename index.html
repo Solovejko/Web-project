@@ -15,7 +15,7 @@
             </div>
 
             <div class="center">
-                <button class="update"><span>Обновить</span></button>
+                <button type="button" class="update" onclick="getLocation()"><span>Обновить</span></button>
             </div>
         </header>
         <main>
@@ -40,7 +40,19 @@
                 </div>
                 <div class="second">
                     <form class="add_form" action="" method="post">
-                        <input type="text" name="city" id="add_city" placeholder="Добавить новый город">
+                        <input type="text" name="city" id="add_city" placeholder="Добавить новый город" list="cities" autocomplete="off">
+                        <datalist id="cities">
+                            <option value="Москва">
+                            <option value="Санкт-Петербург">
+                            <option value="Ставрополь">
+                            <option value="Брянск">
+                            <option value="Киргистан">
+                            <option value="Владивосток">
+                            <option value="Сочи">
+                            <option value="Казань">
+                            <option value="Калининград">
+                            <option value="Екатеринбург">
+                        </datalist>
                         <button type="button" id="submit_city" onclick="addNewCity()">+</button>
                     </form>
                 </div>

@@ -206,6 +206,10 @@ main {
     grid-column: 1/5;
 }
 
+#cities {
+    height: 50px;
+}
+
 @media screen and (max-width: 1300px) {
     .top .temperature {
         font-size: 80px;

@@ -1,4 +1,4 @@
-const timePause = 1000;
+const timePause = 700;
 
 if (localStorage.getItem('globalId') == null)
 {
