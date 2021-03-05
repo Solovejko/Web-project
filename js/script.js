@@ -332,3 +332,10 @@ function del(idCity) {
     document.getElementById(idCity).style.display = "none";
     localStorage.removeItem(idCity);
 }
+
+document.getElementById("add_city")
+    .addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13)
+            document.getElementById("submit_city").click();
+    });

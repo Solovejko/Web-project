@@ -206,8 +206,8 @@ main {
     grid-column: 1/5;
 }
 
-#cities {
-    height: 50px;
+.inputNone {
+    display: none;
 }
 
 @media screen and (max-width: 1300px) {
