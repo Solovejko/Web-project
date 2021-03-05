@@ -44,7 +44,7 @@ async function addNewCity() {
     console.log(commits.coord.lon.toFixed(1), ' ', commits.coord.lat.toFixed(1));
 
     let temp = ~~commits.main.temp;
-    let img = 'weather.png';
+    let img = commits.weather[0].icon + '.png';
     let wind = commits.wind.speed;
     let cloud = commits.weather[0].description;
     let press = commits.main.pressure;
@@ -74,7 +74,6 @@ function createNewElement(city='Moscow', temperature=5, img='weather.png',
     newButton.setAttribute('type', 'button');
     newButton.setAttribute('class', 'delete');
     newButton.setAttribute('onclick', "del('" + newFavorite.getAttribute('id') + "')");
-    // нужно будет добавить onclick
 
     let newUl = document.createElement('ul');
     newUl.setAttribute('class', 'weather');
