@@ -1,3 +1,5 @@
+const timePause = 1000;
+
 if (localStorage.getItem('globalId') == null)
 {
     localStorage.setItem('globalId', '0');
@@ -28,8 +30,7 @@ if (localStorage.getItem('globalId') == null)
     l++;
 }
 
-console.log(localStorage.getItem('globalId'));
-
+getLocation();
 loadFavoriteCity();
 
 function getId() {
@@ -66,17 +67,17 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
     let commits = await response.json();
 
     if (commits.cod === "401"){
-        alert('Извиние, то у вас проблемы с ключом');
+        console.error('Проблемы с ключом');
         return;
     }
 
     if (commits.cod === "404"){
-        alert('Нет информации об этом городе');
+        console.error('Нет информации об этом городе');
         return;
     }
 
     if (commits.cod === "429"){
-        alert('Запросы в минуту превышают лимит бесплатного аккаунта');
+        console.error('Запросы в минуту превышают лимит бесплатного аккаунта');
         return;
     }
 
@@ -102,15 +103,107 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
 
     setTimeout(() => {
     refactorElement(nameCity, temp, img, wind, cloud, press, hum, x, y, id);
-    }, 1000);
+    }, timePause);
 }
 
 
 function refactorElement(city='Moscow', temperature=5, img='weather.png',
                     wind=6.0, cloud='Сloudy', pressure=1013,
-                    humidity=52, x=59.88, y=30.42, id='id-1') {
+                    humidity=52, y=59.88, x=30.42, id='id-1') {
     let newFavorite = document.getElementById(id);
     newFavorite.querySelector('h3').textContent = city;
+    newFavorite.querySelector('.temperature').textContent = temperature.toString()+'°C';
+    newFavorite.querySelector('img').setAttribute('src', 'images/' + img);
+    newFavorite.querySelector('.wind .normal').textContent = wind.toString() + ' м/c';
+    newFavorite.querySelector('.cloud .normal').textContent = cloud;
+    newFavorite.querySelector('.pressure .normal').textContent = pressure.toString() + ' мм';
+    newFavorite.querySelector('.humidity .normal').textContent = humidity.toString() + '%';
+    newFavorite.querySelector('.coord .normal').textContent = '[' + x.toString() + ', ' + y.toString() +']';
+
+}
+
+function getLocation () {
+    navigator.geolocation.getCurrentPosition(success, error);
+    async function success(coords) {
+        let x = coords.coords.latitude;
+        let y = coords.coords.longitude;
+
+        let myKey = '0b5edc7455a336d544760ce639198bc9';
+        let url = `https://api.openweathermap.org/data/2.5/weather?lat=${x}&lon=${y}&appid=${myKey}&units=metric&lang=ru`;
+
+        let response = await fetch(url);
+        let commits = await response.json();
+
+        if (commits.cod === "401"){
+            console.error('Проблемы с ключом');
+            return;
+        }
+
+        if (commits.cod === "404"){
+            console.error('Нет информации об этом городе');
+
+            url = `https://api.openweathermap.org/data/2.5/weather?q=Москва&appid=${myKey}&units=metric&lang=ru`;
+            response = await fetch(url);
+            commits = await response.json();
+        }
+
+        if (commits.cod === "429"){
+            console.error('Запросы в минуту превышают лимит бесплатного аккаунта');
+            return;
+        }
+
+        let nameCity = commits.name;
+        let temp = ~~commits.main.temp;
+        let img = commits.weather[0].icon + '.png';
+        let wind = commits.wind.speed;
+        let cloud = commits.weather[0].description;
+        let press = commits.main.pressure;
+        let hum = commits.main.humidity;
+        x = commits.coord.lon.toFixed(1);
+        y = commits.coord.lat.toFixed(1);
+
+        setTimeout(() => {
+            refactorTopCity(nameCity, temp, img, wind, cloud, press, hum, x, y);
+        }, timePause);
+    }
+
+    async function error({ message }) {
+        let myKey = '0b5edc7455a336d544760ce639198bc9';
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=Москва&appid=${myKey}&units=metric&lang=ru`;
+        let response = await fetch(url);
+        let commits = await response.json();
+
+        if (commits.cod === "401"){
+            console.error('Проблемы с ключом');
+            return;
+        }
+
+        if (commits.cod === "429"){
+            console.error('Запросы в минуту превышают лимит бесплатного аккаунта');
+            return;
+        }
+
+        let nameCity = commits.name;
+        let temp = ~~commits.main.temp;
+        let img = commits.weather[0].icon + '.png';
+        let wind = commits.wind.speed;
+        let cloud = commits.weather[0].description;
+        let press = commits.main.pressure;
+        let hum = commits.main.humidity;
+        x = commits.coord.lon.toFixed(1);
+        y = commits.coord.lat.toFixed(1);
+
+        setTimeout(() => {
+            refactorTopCity(nameCity, temp, img, wind, cloud, press, hum, x, y);
+        }, timePause);
+
+        console.error(message);
+    }
+}
+
+function refactorTopCity(city, temperature, img, wind, cloud, pressure, humidity, y, x) {
+    let newFavorite = document.querySelector('.top');
+    newFavorite.querySelector('h2').textContent = city;
     newFavorite.querySelector('.temperature').textContent = temperature.toString()+'°C';
     newFavorite.querySelector('img').setAttribute('src', 'images/' + img);
     newFavorite.querySelector('.wind .normal').textContent = wind.toString() + ' м/c';
@@ -218,7 +311,6 @@ function createEmptyElement(city='Moscow', id='id-1') {
 }
 
 function del(idCity) {
-    console.log(document.getElementById(idCity).style.display);
     document.getElementById(idCity).style.display = "none";
     localStorage.removeItem(idCity);
 }

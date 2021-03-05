@@ -206,6 +206,13 @@ main {
     grid-column: 1/5;
 }
 
+@media screen and (max-width: 1300px) {
+    .top .temperature {
+        font-size: 80px;
+    }
+}
+
+
 @media screen and (max-width: 1100px) {
     body {
         margin-left: 15%;
@@ -312,6 +319,12 @@ main {
 
     .favorite .weather {
         font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .top .temperature {
+        font-size: 70px;
     }
 }
 
