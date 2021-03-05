@@ -127,7 +127,7 @@ function getLocation() {
     async function success(coords) {
         let x = coords.coords.latitude;
         let y = coords.coords.longitude;
-        alert(x + " "+ y);
+
         let myKey = '0b5edc7455a336d544760ce639198bc9';
         let url = `https://api.openweathermap.org/data/2.5/weather?lat=${x}&lon=${y}&appid=${myKey}&units=metric&lang=ru`;
 
