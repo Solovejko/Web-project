@@ -60,6 +60,14 @@ main {
     padding-bottom: 10px;
 }
 
+.bold {
+    text-align: start;
+}
+
+.normal {
+    text-align: end;
+}
+
 .top img {
     width: 100%;
     align-self: center;
@@ -307,7 +315,7 @@ main {
     }
 }
 
-@media screen and (max-width: 365px) {
+@media screen and (max-width: 387px) {
     .top .temperature {
         font-size: 80px;
     }

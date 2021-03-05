@@ -147,7 +147,6 @@ function createNewElement(city='Moscow', temperature=5, img='weather.png',
 }
 
 function del(idCity) {
-    //idCity = 'id1';
     console.log(document.getElementById(idCity).style.display);
     document.getElementById(idCity).style.display = "none";
     console.log(document.getElementById(idCity).style.display);
