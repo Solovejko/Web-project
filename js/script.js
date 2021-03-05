@@ -22,6 +22,10 @@ if (localStorage.getItem('globalId') == null)
     localStorage.setItem('id' + l, 'Киргистан');
     localStorage.setItem('globalId', (l + 1).toString());
     l++;
+
+    localStorage.setItem('id' + l, 'Ставрополь');
+    localStorage.setItem('globalId', (l + 1).toString());
+    l++;
 }
 
 console.log(localStorage.getItem('globalId'));
