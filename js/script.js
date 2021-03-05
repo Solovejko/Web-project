@@ -13,8 +13,6 @@ function loadFavoriteCity() {
 }
 
 async function addNewCity(nameCity = undefined, load=false, id='id-1') {
-    console.log(nameCity, ' ', id);
-
     if (nameCity === null)
         return;
 
@@ -39,7 +37,7 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
     let response = await fetch(url);
     let commits = await response.json();
 
-    console.log(commits);
+    setTimeout(() => {
 
     if (commits.cod === "401"){
         alert('Извиние, то у вас проблемы с ключом');
@@ -73,97 +71,23 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
     let x = commits.coord.lon.toFixed(1);
     let y = commits.coord.lat.toFixed(1);
 
-    createNewElement(nameCity, temp, img, wind, cloud, press, hum, x, y, id);
+    refactorElement(nameCity, temp, img, wind, cloud, press, hum, x, y, id); }, 1000);
 }
 
 
-function createNewElement(city='Moscow', temperature=5, img='weather.png',
+function refactorElement(city='Moscow', temperature=5, img='weather.png',
                     wind=6.0, cloud='Сloudy', pressure=1013,
                     humidity=52, x=59.88, y=30.42, id='id-1') {
-    let list = document.querySelector('.favorites');
-    let newFavorite = document.createElement('li');
-    newFavorite.setAttribute('class', 'favorite');
-    newFavorite.setAttribute('id', id);
-    let newH3 = document.createElement('h3');
-    newH3.textContent = city;
-    let newSpan = document.createElement('span');
-    newSpan.setAttribute('class', 'temperature');
-    newSpan.textContent = temperature.toString()+'°C';
-    let newImg = document.createElement('img');
-    newImg.setAttribute('src', 'images/' + img);
-    let newButton = document.createElement('button');
-    newButton.setAttribute('type', 'button');
-    newButton.setAttribute('class', 'delete');
-    newButton.setAttribute('onclick', "del('" + newFavorite.getAttribute('id') + "')");
+    let newFavorite = document.getElementById(id);
+    newFavorite.querySelector('h3').textContent = city;
+    newFavorite.querySelector('.temperature').textContent = temperature.toString()+'°C';
+    newFavorite.querySelector('img').setAttribute('src', 'images/' + img);
+    newFavorite.querySelector('.wind .normal').textContent = wind.toString() + ' м/c';
+    newFavorite.querySelector('.cloud .normal').textContent = cloud;
+    newFavorite.querySelector('.pressure .normal').textContent = pressure.toString() + ' мм';
+    newFavorite.querySelector('.humidity .normal').textContent = humidity.toString() + '%';
+    newFavorite.querySelector('.coord .normal').textContent = '[' + x.toString() + ', ' + y.toString() +']';
 
-    let newUl = document.createElement('ul');
-    newUl.setAttribute('class', 'weather');
-
-    let newLi1 = document.createElement('li');
-    let newSpanBold1 = document.createElement('span');
-    newSpanBold1.setAttribute('class', 'bold');
-    newSpanBold1.textContent = 'Ветер';
-    let newSpanNormal1 = document.createElement('span');
-    newSpanNormal1.setAttribute('class', 'normal');
-    newSpanNormal1.textContent = wind.toString() + ' m/s';
-    newLi1.appendChild(newSpanBold1);
-    newLi1.appendChild(newSpanNormal1);
-
-    let newLi2 = document.createElement('li');
-    let newSpanBold2 = document.createElement('span');
-    newSpanBold2.setAttribute('class', 'bold');
-    newSpanBold2.textContent = 'Облачность';
-    let newSpanNormal2 = document.createElement('span');
-    newSpanNormal2.setAttribute('class', 'normal');
-    newSpanNormal2.textContent = cloud;
-    newLi2.appendChild(newSpanBold2);
-    newLi2.appendChild(newSpanNormal2);
-
-    let newLi3 = document.createElement('li');
-    let newSpanBold3 = document.createElement('span');
-    newSpanBold3.setAttribute('class', 'bold');
-    newSpanBold3.textContent = 'Давление';
-    let newSpanNormal3 = document.createElement('span');
-    newSpanNormal3.setAttribute('class', 'normal');
-    newSpanNormal3.textContent = pressure.toString() + ' hpa';
-    newLi3.appendChild(newSpanBold3);
-    newLi3.appendChild(newSpanNormal3);
-
-    let newLi4 = document.createElement('li');
-    let newSpanBold4 = document.createElement('span');
-    newSpanBold4.setAttribute('class', 'bold');
-    newSpanBold4.textContent = 'Влажность';
-    let newSpanNormal4 = document.createElement('span');
-    newSpanNormal4.setAttribute('class', 'normal');
-    newSpanNormal4.textContent = humidity.toString() + '%';
-    newLi4.appendChild(newSpanBold4);
-    newLi4.appendChild(newSpanNormal4);
-
-    let newLi5 = document.createElement('li');
-    let newSpanBold5 = document.createElement('span');
-    newSpanBold5.setAttribute('class', 'bold');
-    newSpanBold5.textContent = 'Координаты';
-    let newSpanNormal5 = document.createElement('span');
-    newSpanNormal5.setAttribute('class', 'normal');
-    newSpanNormal5.textContent = '[' + x.toString() + ', ' + y.toString() +']';
-    newLi5.appendChild(newSpanBold5);
-    newLi5.appendChild(newSpanNormal5);
-
-    newUl.appendChild(newLi1);
-    newUl.appendChild(newLi2);
-    newUl.appendChild(newLi3);
-    newUl.appendChild(newLi4);
-    newUl.appendChild(newLi5);
-
-    newFavorite.appendChild(newH3);
-    newFavorite.appendChild(newSpan);
-    newFavorite.appendChild(newImg);
-    newFavorite.appendChild(newButton);
-    newFavorite.appendChild(newUl);
-
-    list.appendChild(newFavorite);
-
-    console.log(list);
 }
 
 function createEmptyElement(city='Moscow', id='id-1') {
@@ -188,8 +112,10 @@ function createEmptyElement(city='Moscow', id='id-1') {
     newUl.setAttribute('class', 'weather');
 
     let newLi1 = document.createElement('li');
+    newLi1.setAttribute('class', 'wind');
     let newSpanBold1 = document.createElement('span');
     newSpanBold1.setAttribute('class', 'bold');
+    newSpanBold1.textContent = 'Ветер';
 
     let newSpanNormal1 = document.createElement('span');
     newSpanNormal1.setAttribute('class', 'normal');
@@ -198,8 +124,10 @@ function createEmptyElement(city='Moscow', id='id-1') {
     newLi1.appendChild(newSpanNormal1);
 
     let newLi2 = document.createElement('li');
+    newLi2.setAttribute('class', 'cloud');
     let newSpanBold2 = document.createElement('span');
     newSpanBold2.setAttribute('class', 'bold');
+    newSpanBold2.textContent = 'Облачность';
 
     let newSpanNormal2 = document.createElement('span');
     newSpanNormal2.setAttribute('class', 'normal');
@@ -208,8 +136,10 @@ function createEmptyElement(city='Moscow', id='id-1') {
     newLi2.appendChild(newSpanNormal2);
 
     let newLi3 = document.createElement('li');
+    newLi3.setAttribute('class', 'pressure');
     let newSpanBold3 = document.createElement('span');
     newSpanBold3.setAttribute('class', 'bold');
+    newSpanBold3.textContent = 'Давление';
 
     let newSpanNormal3 = document.createElement('span');
     newSpanNormal3.setAttribute('class', 'normal');
@@ -218,8 +148,10 @@ function createEmptyElement(city='Moscow', id='id-1') {
     newLi3.appendChild(newSpanNormal3);
 
     let newLi4 = document.createElement('li');
+    newLi4.setAttribute('class', 'humidity');
     let newSpanBold4 = document.createElement('span');
     newSpanBold4.setAttribute('class', 'bold');
+    newSpanBold4.textContent = 'Влажность';
 
     let newSpanNormal4 = document.createElement('span');
     newSpanNormal4.setAttribute('class', 'normal');
@@ -228,10 +160,13 @@ function createEmptyElement(city='Moscow', id='id-1') {
     newLi4.appendChild(newSpanNormal4);
 
     let newLi5 = document.createElement('li');
+    newLi5.setAttribute('class', 'coord');
     let newSpanBold5 = document.createElement('span');
     newSpanBold5.setAttribute('class', 'bold');
+    newSpanBold5.textContent = 'Координаты';
 
     let newSpanNormal5 = document.createElement('span');
+    newSpanNormal5.setAttribute('class', 'normal');
 
     newLi5.appendChild(newSpanBold5);
     newLi5.appendChild(newSpanNormal5);
