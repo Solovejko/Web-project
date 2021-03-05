@@ -122,7 +122,7 @@ function refactorElement(city='Moscow', temperature=5, img='weather.png',
 
 }
 
-function getLocation () {
+function getLocation() {
     navigator.geolocation.getCurrentPosition(success, error);
     async function success(coords) {
         let x = coords.coords.latitude;
@@ -201,6 +201,11 @@ function getLocation () {
     }
 }
 
+function update() {
+    clearTop();
+    getLocation();
+}
+
 function refactorTopCity(city, temperature, img, wind, cloud, pressure, humidity, y, x) {
     let newFavorite = document.querySelector('.top');
     newFavorite.querySelector('h2').textContent = city;
@@ -211,6 +216,19 @@ function refactorTopCity(city, temperature, img, wind, cloud, pressure, humidity
     newFavorite.querySelector('.pressure .normal').textContent = pressure.toString() + ' мм';
     newFavorite.querySelector('.humidity .normal').textContent = humidity.toString() + '%';
     newFavorite.querySelector('.coord .normal').textContent = '[' + x.toString() + ', ' + y.toString() +']';
+
+}
+
+function clearTop() {
+    let city = document.querySelector('.top');
+    city.querySelector('h2').textContent = "";
+    city.querySelector('.temperature').textContent = "";
+    city.querySelector('img').setAttribute('src', 'images/unknown.png');
+    city.querySelector('.wind .normal').textContent = "";
+    city.querySelector('.cloud .normal').textContent = "";
+    city.querySelector('.pressure .normal').textContent = "";
+    city.querySelector('.humidity .normal').textContent = "";
+    city.querySelector('.coord .normal').textContent = "";
 
 }
 
