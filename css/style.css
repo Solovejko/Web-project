@@ -137,6 +137,11 @@ main {
     font-weight: normal;
 }
 
+.add_form {
+    display: grid;
+    grid-template-columns: 1fr 40px;
+}
+
 #submit_city {
     margin: 5px;
     background-image: url("../images/plus.png");
@@ -153,6 +158,8 @@ main {
     border: none;
     padding: 10px;
     background-color: #EAEAEA;
+    align-self: center;
+
 }
 
 /* ---------------------------------- */
