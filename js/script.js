@@ -221,14 +221,14 @@ function refactorTopCity(city, temperature, img, wind, cloud, pressure, humidity
 
 function clearTop() {
     let city = document.querySelector('.top');
-    city.querySelector('h2').textContent = "";
-    city.querySelector('.temperature').textContent = "";
+    city.querySelector('h2').textContent = "Обновление...";
+    city.querySelector('.temperature').textContent = "-°C";
     city.querySelector('img').setAttribute('src', 'images/unknown.png');
-    city.querySelector('.wind .normal').textContent = "";
-    city.querySelector('.cloud .normal').textContent = "";
-    city.querySelector('.pressure .normal').textContent = "";
-    city.querySelector('.humidity .normal').textContent = "";
-    city.querySelector('.coord .normal').textContent = "";
+    city.querySelector('.wind .normal').textContent = "-";
+    city.querySelector('.cloud .normal').textContent = "-";
+    city.querySelector('.pressure .normal').textContent = "-";
+    city.querySelector('.humidity .normal').textContent = "-";
+    city.querySelector('.coord .normal').textContent = "-";
 
 }
 
@@ -243,6 +243,7 @@ function createEmptyElement(city='Moscow', id='id-1') {
 
     let newSpan = document.createElement('span');
     newSpan.setAttribute('class', 'temperature');
+/**/newSpan.textContent = '-°C';
     let newImg = document.createElement('img');
     newImg.setAttribute('src', 'images/unknown.png');
     let newButton = document.createElement('button');
@@ -261,7 +262,7 @@ function createEmptyElement(city='Moscow', id='id-1') {
 
     let newSpanNormal1 = document.createElement('span');
     newSpanNormal1.setAttribute('class', 'normal');
-
+/**/newSpanNormal1.textContent = '-';
     newLi1.appendChild(newSpanBold1);
     newLi1.appendChild(newSpanNormal1);
 
@@ -273,6 +274,7 @@ function createEmptyElement(city='Moscow', id='id-1') {
 
     let newSpanNormal2 = document.createElement('span');
     newSpanNormal2.setAttribute('class', 'normal');
+/**/newSpanNormal2.textContent = '-';
 
     newLi2.appendChild(newSpanBold2);
     newLi2.appendChild(newSpanNormal2);
@@ -285,6 +287,7 @@ function createEmptyElement(city='Moscow', id='id-1') {
 
     let newSpanNormal3 = document.createElement('span');
     newSpanNormal3.setAttribute('class', 'normal');
+/**/newSpanNormal3.textContent = '-';
 
     newLi3.appendChild(newSpanBold3);
     newLi3.appendChild(newSpanNormal3);
@@ -297,6 +300,7 @@ function createEmptyElement(city='Moscow', id='id-1') {
 
     let newSpanNormal4 = document.createElement('span');
     newSpanNormal4.setAttribute('class', 'normal');
+/**/newSpanNormal4.textContent = '-';
 
     newLi4.appendChild(newSpanBold4);
     newLi4.appendChild(newSpanNormal4);
@@ -309,6 +313,7 @@ function createEmptyElement(city='Moscow', id='id-1') {
 
     let newSpanNormal5 = document.createElement('span');
     newSpanNormal5.setAttribute('class', 'normal');
+/**/newSpanNormal5.textContent = '-';
 
     newLi5.appendChild(newSpanBold5);
     newLi5.appendChild(newSpanNormal5);
