@@ -30,14 +30,10 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${nameCity}&appid=${myKey}&units=metric&lang=ru`;
 
     if (load)
-    {
         createEmptyElement(nameCity, id);
-    }
 
     let response = await fetch(url);
     let commits = await response.json();
-
-    setTimeout(() => {
 
     if (commits.cod === "401"){
         alert('Извиние, то у вас проблемы с ключом');
@@ -62,6 +58,9 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
         id = 'id' + l;
     }
 
+    if (!load)
+        createEmptyElement(nameCity, id);
+
     let temp = ~~commits.main.temp;
     let img = commits.weather[0].icon + '.png';
     let wind = commits.wind.speed;
@@ -71,7 +70,9 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
     let x = commits.coord.lon.toFixed(1);
     let y = commits.coord.lat.toFixed(1);
 
-    refactorElement(nameCity, temp, img, wind, cloud, press, hum, x, y, id); }, 1000);
+    setTimeout(() => {
+    refactorElement(nameCity, temp, img, wind, cloud, press, hum, x, y, id);
+    }, 1000);
 }
 
 
