@@ -33,10 +33,6 @@ if (localStorage.getItem('globalId') == null)
 getLocation();
 loadFavoriteCity();
 
-function getId() {
-    return globalId++;
-}
-
 function loadFavoriteCity() {
     for (let i = 0; i < Number.parseInt(localStorage.getItem('globalId')); i++)
         addNewCity(localStorage.getItem('id' + i.toString()), true, 'id' + i.toString());
@@ -62,22 +58,34 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
 
     if (load)
         createEmptyElement(nameCity, id);
+    else
+    {
+        id = Date.now().toString();
+        createEmptyElement(nameCity, id);
+    }
 
-    let response = await fetch(url);
+    let response = await fetch(url).catch(err => {
+        alert('Произошла ошибка при запросе')
+        del(id);
+    });
+
     let commits = await response.json();
 
     if (commits.cod === "401"){
-        console.error('Проблемы с ключом');
+        alert('Проблемы с ключом');
+        del(id);
         return;
     }
 
     if (commits.cod === "404"){
-        console.error('Нет информации об этом городе');
+        alert('Нет информации об этом городе');
+        del(id);
         return;
     }
 
     if (commits.cod === "429"){
-        console.error('Запросы в минуту превышают лимит бесплатного аккаунта');
+        alert('Запросы в минуту превышают лимит бесплатного аккаунта');
+        del(id);
         return;
     }
 
@@ -86,11 +94,10 @@ async function addNewCity(nameCity = undefined, load=false, id='id-1') {
         l = Number.parseInt(l);
         localStorage.setItem('id' + l, nameCity);
         localStorage.setItem('globalId', (l + 1).toString());
+        document.getElementById(id).setAttribute('id', 'id' + l);
         id = 'id' + l;
+        document.getElementById(id).querySelector(".delete").setAttribute('onclick', "del('" + id + "')");
     }
-
-    if (!load)
-        createEmptyElement(nameCity, id);
 
     let temp = ~~commits.main.temp;
     let img = commits.weather[0].icon + '.png';
@@ -135,12 +142,12 @@ function getLocation() {
         let commits = await response.json();
 
         if (commits.cod === "401"){
-            console.error('Проблемы с ключом');
+            alert('Проблемы с ключом');
             return;
         }
 
         if (commits.cod === "404"){
-            console.error('Нет информации об этом городе');
+            alert('Нет информации об этом городе');
 
             url = `https://api.openweathermap.org/data/2.5/weather?q=Москва&appid=${myKey}&units=metric&lang=ru`;
             response = await fetch(url);
@@ -148,7 +155,7 @@ function getLocation() {
         }
 
         if (commits.cod === "429"){
-            console.error('Запросы в минуту превышают лимит бесплатного аккаунта');
+            alert('Запросы в минуту превышают лимит бесплатного аккаунта');
             return;
         }
 
@@ -174,12 +181,12 @@ function getLocation() {
         let commits = await response.json();
 
         if (commits.cod === "401"){
-            console.error('Проблемы с ключом');
+            alert('Проблемы с ключом');
             return;
         }
 
         if (commits.cod === "429"){
-            console.error('Запросы в минуту превышают лимит бесплатного аккаунта');
+            alert('Запросы в минуту превышают лимит бесплатного аккаунта');
             return;
         }
 
@@ -229,107 +236,14 @@ function clearTop() {
     city.querySelector('.pressure .normal').textContent = "-";
     city.querySelector('.humidity .normal').textContent = "-";
     city.querySelector('.coord .normal').textContent = "-";
-
 }
 
 function createEmptyElement(city='Moscow', id='id-1') {
     let list = document.querySelector('.favorites');
 
-    let newFavorite = document.createElement('li');
-    newFavorite.setAttribute('class', 'favorite');
-    newFavorite.setAttribute('id', id);
-    let newH3 = document.createElement('h3');
-    newH3.textContent = city;
-
-    let newSpan = document.createElement('span');
-    newSpan.setAttribute('class', 'temperature');
-/**/newSpan.textContent = '-°C';
-    let newImg = document.createElement('img');
-    newImg.setAttribute('src', 'images/unknown.png');
-    let newButton = document.createElement('button');
-    newButton.setAttribute('type', 'button');
-    newButton.setAttribute('class', 'delete');
-    newButton.setAttribute('onclick', "del('" + newFavorite.getAttribute('id') + "')");
-
-    let newUl = document.createElement('ul');
-    newUl.setAttribute('class', 'weather');
-
-    let newLi1 = document.createElement('li');
-    newLi1.setAttribute('class', 'wind');
-    let newSpanBold1 = document.createElement('span');
-    newSpanBold1.setAttribute('class', 'bold');
-    newSpanBold1.textContent = 'Ветер';
-
-    let newSpanNormal1 = document.createElement('span');
-    newSpanNormal1.setAttribute('class', 'normal');
-/**/newSpanNormal1.textContent = '-';
-    newLi1.appendChild(newSpanBold1);
-    newLi1.appendChild(newSpanNormal1);
-
-    let newLi2 = document.createElement('li');
-    newLi2.setAttribute('class', 'cloud');
-    let newSpanBold2 = document.createElement('span');
-    newSpanBold2.setAttribute('class', 'bold');
-    newSpanBold2.textContent = 'Облачность';
-
-    let newSpanNormal2 = document.createElement('span');
-    newSpanNormal2.setAttribute('class', 'normal');
-/**/newSpanNormal2.textContent = '-';
-
-    newLi2.appendChild(newSpanBold2);
-    newLi2.appendChild(newSpanNormal2);
-
-    let newLi3 = document.createElement('li');
-    newLi3.setAttribute('class', 'pressure');
-    let newSpanBold3 = document.createElement('span');
-    newSpanBold3.setAttribute('class', 'bold');
-    newSpanBold3.textContent = 'Давление';
-
-    let newSpanNormal3 = document.createElement('span');
-    newSpanNormal3.setAttribute('class', 'normal');
-/**/newSpanNormal3.textContent = '-';
-
-    newLi3.appendChild(newSpanBold3);
-    newLi3.appendChild(newSpanNormal3);
-
-    let newLi4 = document.createElement('li');
-    newLi4.setAttribute('class', 'humidity');
-    let newSpanBold4 = document.createElement('span');
-    newSpanBold4.setAttribute('class', 'bold');
-    newSpanBold4.textContent = 'Влажность';
-
-    let newSpanNormal4 = document.createElement('span');
-    newSpanNormal4.setAttribute('class', 'normal');
-/**/newSpanNormal4.textContent = '-';
-
-    newLi4.appendChild(newSpanBold4);
-    newLi4.appendChild(newSpanNormal4);
-
-    let newLi5 = document.createElement('li');
-    newLi5.setAttribute('class', 'coord');
-    let newSpanBold5 = document.createElement('span');
-    newSpanBold5.setAttribute('class', 'bold');
-    newSpanBold5.textContent = 'Координаты';
-
-    let newSpanNormal5 = document.createElement('span');
-    newSpanNormal5.setAttribute('class', 'normal');
-/**/newSpanNormal5.textContent = '-';
-
-    newLi5.appendChild(newSpanBold5);
-    newLi5.appendChild(newSpanNormal5);
-
-    newUl.appendChild(newLi1);
-    newUl.appendChild(newLi2);
-    newUl.appendChild(newLi3);
-    newUl.appendChild(newLi4);
-    newUl.appendChild(newLi5);
-
-    newFavorite.appendChild(newH3);
-    newFavorite.appendChild(newSpan);
-    newFavorite.appendChild(newImg);
-    newFavorite.appendChild(newButton);
-    newFavorite.appendChild(newUl);
-
+    let newFavorite = tempCity.content.cloneNode(true);
+    newFavorite.querySelector('.favorite').setAttribute('id', id);
+    newFavorite.querySelector('.delete').setAttribute('onclick', "del('" + id + "')");
     list.appendChild(newFavorite);
 }
 
@@ -338,9 +252,14 @@ function del(idCity) {
     localStorage.removeItem(idCity);
 }
 
-document.getElementById("add_city")
-    .addEventListener("keyup", function(event) {
+document.getElementById("myForm")
+    .addEventListener("submit", function(event) {
         event.preventDefault();
-        if (event.keyCode === 13)
-            document.getElementById("submit_city").click();
+        addNewCity();
+    });
+
+document.getElementById("butHeader")
+    .addEventListener("click", function(event) {
+        event.preventDefault();
+        update();
     });
